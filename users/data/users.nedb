@@ -1,0 +1,3 @@
+{"_id":1,"email":"example@gmail.com","password":"hash","salt":"salt","firstName":"name","lastName":"soname","age":18,"availableFoodTypes":["meal","fish","milk","vegetable"],"registrationDate":1548537318}
+{"_id":2,"email":"example2@gmail.com","password":"hash2","salt":"salt2","firstName":"Fox","lastName":"Kids","age":24,"availableFoodTypes":["meal","fish","milk","vegetable"],"registrationDate":1548537318}
+{"_id":3,"email":"example@gmail.com","password":"hash","salt":"salt","firstName":"Kara","lastName":"Meison","age":45,"availableFoodTypes":["meal","fish","milk","vegetable"],"registrationDate":1548537318}

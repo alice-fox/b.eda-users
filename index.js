@@ -7,6 +7,7 @@ var configManager = require('./config');
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var serviceRegistryUtils = require('./utils/serviceRegistry');
 
 var app;
 var config;
@@ -35,10 +36,19 @@ async.waterfall([
 		console.info('Starting server on %s:%s', host, port);
 		app.listen(port, host, callback);
 	},
+	function(callback) {
+		serviceRegistryUtils.init({
+			serviceRegistryConfig: config.serviceRegistry,
+			serviceConfig: {
+				name: config.name,
+				listen: config.listen,
+				tags: config.serviceRegistry.tags || []
+			}
+		}, callback);
+	},
 	function() {
 		console.info('Server started');
 	}
 ], function(error) {
-		console.log(arguments)
-	console.error('Process failed: %s', error && error.stac);
+	console.error('Process failed: %s', error && error.stack);
 });

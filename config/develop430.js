@@ -8,7 +8,7 @@ exports.config = {
 		port: '8500'
 	},
 	listen: {
-		host: '192.168.68.112',
+		host: '192.168.43.195',
 		port: '8002'
 	},
 	db: {

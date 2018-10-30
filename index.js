@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var async = require('async');
 
 var initDb = require('./db').init;
@@ -11,6 +12,30 @@ var serviceRegistryUtils = require('./utils/serviceRegistry');
 
 var app;
 var config;
+
+
+var gracefulShutdown = function(exitCode) {
+	var timeoutId;
+	var exitCallback = function() {
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+		process.exit(128 + exitCode);
+	};
+
+	timeoutId = setTimeout(exitCallback, 3000);
+
+	serviceRegistryUtils.deregister(exitCallback);
+};
+
+_({
+	SIGINT: 2,
+	SIGTERM: 15
+}).each(function(exitCode, exitSignal) {
+	process.on(exitSignal, function() {
+		gracefulShutdown(exitCode);
+	});
+});
 
 async.waterfall([
 	function(callback) {

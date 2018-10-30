@@ -67,6 +67,7 @@ exports.deregister = function(callback) {
 	}
 };
 
+
 exports.getServiceInfo = function(params, callback) {
 	var serviceName = params.service;
 

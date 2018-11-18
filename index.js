@@ -67,8 +67,10 @@ async.waterfall([
 			serviceConfig: {
 				name: config.name,
 				listen: config.listen,
-				tags: config.serviceRegistry.tags || []
-			}
+				tags: config.serviceRegistry.tags
+			},
+			services: [],
+			check: config.serviceRegistry.healthcheck
 		}, callback);
 	},
 	function() {

@@ -8,7 +8,7 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
  
 // Connection URL
-var url = 'mongodb://172.17.0.2:27017/users'; // job
+var url = 'mongodb://172.17.0.2:27017/users'; 
 //var url = require('./config/develop');
  
 // Database Name

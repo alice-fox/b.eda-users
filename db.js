@@ -5,6 +5,18 @@ var pathUtils = require('path');
 
 
 var MongoClient = require('mongodb').MongoClient;
+<<<<<<< HEAD
+=======
+var assert = require('assert');
+ 
+// Connection URL
+var url = 'mongodb://172.17.0.2:27017/users'; 
+//var url = require('./config/develop');
+ 
+// Database Name
+var dbName = 'dbUsers';
+ 
+>>>>>>> e9a031cb38a0d140cafd1ad5b15232325447c39b
 
 var insertDocuments = function(db, callback) {
   // Get the documents collection

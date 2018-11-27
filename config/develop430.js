@@ -12,6 +12,8 @@ exports.config = {
 		port: '8002'
 	},
 	db: {
-		path: './data/users.nedb'
+		type: 'mongodb',
+		url: 'mongodb://172.17.0.2:27017',
+		dbName: 'users'
 	}
 };

@@ -1,14 +1,13 @@
 {
-  "name": "users",
+  "name": "alicefox",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "test -z $NODE_ENV && export NODE_ENV=develop; supervisor index.js",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "alicefox",
   "license": "ISC",
   "dependencies": {
     "ajv": "5.2.4",
@@ -16,6 +15,7 @@
     "body-parser": "1.18.2",
     "consul": "^0.34.0",
     "express": "4.16.2",
+    "mongodb": "^3.1.10",
     "nedb": "1.8.0",
     "underscore": "1.8.3"
   },

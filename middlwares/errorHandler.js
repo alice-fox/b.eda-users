@@ -3,6 +3,8 @@
 var errors = require('../utils/errors');
 
 module.exports = function(err, req, res, next) {
+	console.error(err.stack || err);
+
 	if (!res.headersSent) {
 		var error;
 		if (err instanceof errors.BaseError) {

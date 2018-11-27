@@ -5,15 +5,6 @@ var pathUtils = require('path');
 
 
 var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
- 
-// Connection URL
-var url = 'mongodb://172.17.0.2:27017/users'; // job
-//var url = require('./config/develop');
- 
-// Database Name
-var dbName = 'dbUsers';
- 
 
 var insertDocuments = function(db, callback) {
   // Get the documents collection
@@ -90,24 +81,11 @@ var indexCollection = function(db, callback) {
   );
 };
 
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, client) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
- 
-  var db = client.db(dbName);
- 
-  insertDocuments(db, function() {
-    indexCollection(db, function() {
-      client.close();
-    });
-  });
-});
-
 exports.db;
 
 var absolutePathRegexp = /^\//;
-exports.init = function(params, callback) {
+
+var initLocalDb = function(params, callback) {
 	var dbPath = params.path;
 	if (!absolutePathRegexp.test(dbPath)) {
 		dbPath = pathUtils.join(__dirname, dbPath);
@@ -122,5 +100,29 @@ exports.init = function(params, callback) {
 		exports.db = db;
 		callback();
 	});
+};
+
+var initMongoDb = function(params, callback){
+	MongoClient.connect(params.url, {
+		useNewUrlParser: true
+	}, function(err, client) {
+		if (err) {
+			return callback(err);
+		}
+
+	  	var db = client.db(params.dbName);
+	  	exports.db = db;
+	  	callback();
+  	
+	});
+};
+
+exports.init = function(params, callback) {
+	if (params.type == 'mongodb'){
+		initMongoDb(params, callback);
+	}
+	else if(params.type == 'local'){
+		initLocalDb(params, callback);
+	}
 };
 

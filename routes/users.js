@@ -84,7 +84,7 @@ module.exports = function(app) {
 			},
 			function(validatedParams, callback) {
 				params = validatedParams;
-				db.findOne({_id: params._id}, callback);
+				db.collection('users').findOne({_id: params._id}, callback);
 			},
 			function(user, callback) {
 				if (!user) {
@@ -110,7 +110,8 @@ module.exports = function(app) {
 					properties: {
 						offset: {
 							type: 'integer',
-							minimum: 0
+							minimum: 0,
+							default: 0
 						},
 						limit: {
 							type: 'integer',
@@ -133,11 +134,11 @@ module.exports = function(app) {
 					};
 				}
 
-				var cursor = db.find(condition)
+				var cursor = db.collection('users').find(condition)
 					.skip(query.offset)
 					.limit(query.limit);
 
-				cursor.exec(callback);
+				cursor.toArray(callback);
 			},
 			function(users, callback) {
 				res.json({
@@ -154,7 +155,7 @@ module.exports = function(app) {
 				validate(userScheme, data, callback);
 			},
 			function(data, callback) {
-				db.insert(data, callback);
+				db.collection('users').insert(data, callback);
 			},
 			function(users, callback) {
 				res.json({
@@ -179,7 +180,7 @@ module.exports = function(app) {
 			},
 			function(validatedData, callback) {
 				data = validatedData;
-				db.findOne({_id: params._id}, callback);
+				db.collection('users').findOne({_id: params._id}, callback);
 			},
 			function(user, callback) {
 				if (!user) {
@@ -188,7 +189,7 @@ module.exports = function(app) {
 					));
 				}
 
-				db.update(
+				db.collection('users').update(
 					{_id: params._id},
 					data,
 					{returnUpdatedDocs: true},
@@ -212,7 +213,7 @@ module.exports = function(app) {
 			},
 			function(validatedParams, callback) {
 				params = validatedParams;
-				db.findOne({_id: params._id}, callback);
+				db.collection('users').findOne({_id: params._id}, callback);
 			},
 			function(user, callback) {
 				if (!user) {
@@ -221,7 +222,7 @@ module.exports = function(app) {
 					));
 				}
 
-				db.remove({_id: params.id}, {}, callback);
+				db.collection('users').remove({_id: params.id}, {}, callback);
 			},
 			function(user) {
 				res.json({

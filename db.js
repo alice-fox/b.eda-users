@@ -85,24 +85,7 @@ exports.db;
 
 var absolutePathRegexp = /^\//;
 
-var initLocalDb = function(params, callback) {
-	var dbPath = params.path;
-	if (!absolutePathRegexp.test(dbPath)) {
-		dbPath = pathUtils.join(__dirname, dbPath);
-	}
-
-	var db = new Datastore({filename: dbPath});
-	db.loadDatabase(function(err) {
-		if (err) {
-			return callback(err);
-		}
-
-		exports.db = db;
-		callback();
-	});
-};
-
-var initMongoDb = function(params, callback){
+exports.init = function(params, callback) {
 	MongoClient.connect(params.url, {
 		useNewUrlParser: true
 	}, function(err, client) {
@@ -115,14 +98,5 @@ var initMongoDb = function(params, callback){
 	  	callback();
   	
 	});
-};
-
-exports.init = function(params, callback) {
-	if (params.type == 'mongodb'){
-		initMongoDb(params, callback);
-	}
-	else if(params.type == 'local'){
-		initLocalDb(params, callback);
-	}
 };
 

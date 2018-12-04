@@ -4,7 +4,7 @@ exports.config = {
 	env: 'development',
 	name: 'users',
 	serviceRegistry: {
-		host: '192.168.68.112',
+		host: '192.168.0.110',
 		port: '8500'
 	},
 	listen: {

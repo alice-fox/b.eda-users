@@ -15,7 +15,7 @@ exports.config = {
 	env: 'production',
 	name: 'users',
 	serviceRegistry: {
-		host: '192.168.0.110',
+		host: '192.168.68.112',
 		port: '8500'
 	},
 	listen: {
@@ -24,7 +24,7 @@ exports.config = {
 	},
 	db: {
 		type: 'mongodb',
-		url: 'mongodb://172.17.0.2:27017',
+		url: 'mongodb://172.18.0.2:27017',
 		dbName: 'users'
 	}
 };

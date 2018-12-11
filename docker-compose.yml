@@ -1,0 +1,25 @@
+version: '2'
+services:
+    myapp:
+        build: .
+        container_name: "b.eda-users-compose"
+        image: debian/latest
+        environment:
+            - NODE_ENV=develop
+        volumes:
+            - .:/var/www:rw
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+        ports:
+            - 8002:8002
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+    mongodb:
+        image: mongo:4.0.4-xenial
+        container_name: "mongodb"
+        environment:
+          - MONGO_LOG_DIR=/dev/null
+        ports:
+            - 27017:27017
+        command: mongod --smallfiles --logpath=/dev/null # --quiet

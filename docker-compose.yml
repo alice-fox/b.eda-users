@@ -5,7 +5,7 @@ services:
         container_name: "b.eda-users-compose"
         image: debian/latest
         environment:
-            - NODE_ENV=develop
+            - NODE_ENV=test
         volumes:
             - .:/var/www:rw
             - /tmp/.X11-unix:/tmp/.X11-unix:rw

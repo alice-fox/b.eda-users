@@ -25,6 +25,6 @@ exports.config = {
 	db: {
 		type: 'mongodb',
 		url: 'mongodb://172.18.0.2:27017',
-		dbName: 'test'
+		dbName: 'users-test'
 	}
 };

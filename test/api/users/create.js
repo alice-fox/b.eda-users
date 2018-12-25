@@ -1,6 +1,7 @@
 var got = require('got');
 var async = require('async');
 var expect = require('expect.js');
+var dbModule = require('../../../db');
 var configManager = require('../../../config');
 var testUtils = require('../../utils');
 
@@ -15,12 +16,14 @@ var testData = {
 		age: 40,
 		availableFoodTypes: ['meal', 'milk'],
 		registrationDate: Date.now()
-	}
+	} 
 };
 
 describe('POST /api/users', function() {
 	before(function(done) {
-		testUtils.initDb(done);
+		testUtils.initDb(function(err) {
+			testUtils.cleanDb(done)
+		});
 	});
 
 	it('should be ok', function(done) {
@@ -38,10 +41,8 @@ describe('POST /api/users', function() {
 					body: testData.user
 				}, callback);
 			},
-			function(response, callback) {
-				console.log(response);
-
-				var createdUser = response.data;
+			function(responseData, response, callback) {
+				var createdUser = responseData.data;
 
 				expect(createdUser).to.be.eql(testData.user);
 
@@ -53,13 +54,11 @@ describe('POST /api/users', function() {
 	it('should create user in db', function(done) {
 		async.waterfall([
 			function(callback) {
-				db.getCollection('users').findOne({
+				dbModule.db.collection('users').findOne({
 					_id: testData.user._id
 				}, callback);
 			},
 			function(user, callback) {
-				console.log(user);
-
 				expect(user).to.be.eql(testData.user);
 
 				callback();

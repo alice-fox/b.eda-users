@@ -1,6 +1,7 @@
 var got = require('got');
 var async = require('async');
 var expect = require('expect.js');
+var dbModule = require('../../../db');
 var configManager = require('../../../config');
 var testUtils = require('../../utils');
 
@@ -22,9 +23,10 @@ describe('DELETE /api/users/:_id', function() {
 	before(function(done) {
 		async.waterfall([
 			function(callback) {
-				testUtils.initDb(done);
+				testUtils.initDb(callback);
 			},
 			function(callback) {
+				var config = configManager.get();
 				got({
 					hostname: config.listen.host,
 					port: config.listen.port,
@@ -43,18 +45,16 @@ describe('DELETE /api/users/:_id', function() {
 
 		async.waterfall([
 			function(callback) {
-				got({
+				got['delete']({
 					hostname: config.listen.host,
 					port: config.listen.port,
 					path: '/api/users/' + testData.user._id
 				}, {
-					method: 'delete',
-					json: true,
-					body: testData.user
+					json: true
 				}, callback);
 			},
-			function(response, callback) {
-				console.log(response);
+			function(responseData, response, callback) {
+				console.log(responseData);
 
 				// var createdUser = response.data;
 
@@ -68,13 +68,11 @@ describe('DELETE /api/users/:_id', function() {
 	it('should delete user from db', function(done) {
 		async.waterfall([
 			function(callback) {
-				db.getCollection('users').findOne({
+				dbModule.db.collection('users').findOne({
 					_id: testData.user._id
 				}, callback);
 			},
 			function(user, callback) {
-				console.log(user);
-
 				expect(user).not.to.be.ok();
 
 				callback();

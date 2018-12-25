@@ -155,11 +155,13 @@ module.exports = function(app) {
 				validate(userScheme, data, callback);
 			},
 			function(data, callback) {
-				db.collection('users').insert(data, callback);
+				db.collection('users').insertOne(data, {
+					returnDocsOnly: true
+				}, callback);
 			},
-			function(users, callback) {
+			function(operationResult, callback) {
 				res.json({
-					data: users
+					data: operationResult.ops[0]
 				});
 			}
 		], next);
@@ -168,7 +170,6 @@ module.exports = function(app) {
 	app.put('/api/users/:_id', function(req, res, next) {
 		var params = req.params;
 		var data = req.body;
-		console.log(params, data)
 
 		async.waterfall([
 			function(callback) {
@@ -222,7 +223,7 @@ module.exports = function(app) {
 					));
 				}
 
-				db.collection('users').remove({_id: params.id}, {}, callback);
+				db.collection('users').remove({_id: params._id}, {}, callback);
 			},
 			function(user) {
 				res.json({

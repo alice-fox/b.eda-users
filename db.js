@@ -2,15 +2,9 @@
 
 var Datastore = require('nedb');
 var pathUtils = require('path');
-
-
 var MongoClient = require('mongodb').MongoClient;
 
-
-
 exports.db;
-
-var absolutePathRegexp = /^\//;
 
 exports.init = function(params, callback) {
 	MongoClient.connect(params.url, {
@@ -23,7 +17,5 @@ exports.init = function(params, callback) {
 	  	var db = client.db(params.dbName);
 	  	exports.db = db;
 	  	callback();
-  	
 	});
 };
-

@@ -1,16 +1,6 @@
 'use strict';
 
-
-var os = require('os');
-var _ = require('underscore');
-
-var getExternalIP = function() {
-	return _(os.networkInterfaces()).chain().find(function(ni, name) {
-		return name !== 'lo';
-	}).find(function(ni) {
-		return !ni.internal && ni.family === 'IPv4';
-	}).value().address;
-};
+var configUtils = require('./utils');
 
 exports.config = {
 	env: 'develop',
@@ -20,7 +10,7 @@ exports.config = {
 		port: '8500'
 	},
 	listen: {
-		host: getExternalIP(),
+		host: configUtils.getExternalIP(),
 		port: '8002'
 	},
 	db: {
